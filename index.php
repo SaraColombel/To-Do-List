@@ -65,43 +65,68 @@ function addUser($name_user, $first_name_user, $email_user, $password_user){
         $req -> execute();
 
         // 4. Return confirmation message
-        return "Utilisateur enregistré avec succès.";
+        return "<h5>Utilisateur enregistré avec succès.</h5>";
 
     } catch (EXCEPTION $error) {
         return $error -> getMessage();
     };
 };
 
-// Function to get back users from DB
-// Param : void
+// Function to get back a user from DB
+// Param : string
 // Return : array | string
-function readUsers(){
+function readUsersByEmail($email_user){
         // 1 - Instantiates the PDO connection object
         $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         // try ... catch
         try{
             // 1. Prepare request SELECT
-            $req=$bdd->prepare('SELECT id_user, name_user, first_name_user, email_user, password_user FROM users');
+            $req=$bdd->prepare('SELECT id_user, name_user, first_name_user, email_user, password_user FROM users WHERE email_user = ?');
 
-            // 2. Execute request
+            // 2. Add email in the request by associate "?" with "$email_user" 
+            $req -> bindParam(1, $email_user, PDO::PARAM_STR);
+
+            // 3. Execute request
             $req -> execute();
 
-            // 3. Get back DB response
+            // 4. Get back DB response
             $data = $req -> fetchAll(PDO::FETCH_ASSOC);
 
-            // 4. Return datas
+            // 5. Return datas
             return $data;
         } catch(EXCEPTION $error){
             return $error->getMessage();
         };
 };
 
+function readUsers(){
+    // 1 - Instantiates the PDO connection object
+    $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+    // try ... catch
+    try{
+        // 1. Prepare request SELECT
+        $req=$bdd->prepare('SELECT id_user, name_user, first_name_user, email_user, password_user FROM users');
+
+        // 2. Execute request
+        $req -> execute();
+
+        // 3. Get back DB response
+        $data = $req -> fetchAll(PDO::FETCH_ASSOC);
+
+        // 4. Return datas
+        return $data;
+    } catch(EXCEPTION $error){
+        return $error->getMessage();
+    };
+};
+
 // Function to show users infos
 // Param : array["id_user" => INT, "name_user" => string, "first_name_user' => string, "email_user" => string, "password_user" => string]
 // Return : String
 function cardUser($profil){
-    return "<article style = 'border-top : 2px solid black'>
+    return "<article style = 'border-top : 2px solid black' class='me-5'>
         <h5 class='mt-4'><strong>Nom - Prénom :</strong> {$profil['name_user']} - {$profil['first_name_user']}</h5>
         <h6 class='mb-4'>Email : {$profil['email_user']}</h6>
     </article>";
@@ -113,9 +138,15 @@ if(isset($_POST["submit"])){
     if($tab["erreur"] != ""){
         $message = $tab["erreur"];
     } else {
-        $message = addUser($tab["name_user"], $tab["first_name_user"], $tab["email_user"], $tab["password_user"]);
-    };
-};
+        // Check if email available
+        if(empty(readUsersByEmail($tab['email_user']))){
+        // IF yes => Start adding a user
+            $message = addUser($tab["name_user"], $tab["first_name_user"], $tab["email_user"], $tab["password_user"]);
+        }else {
+            $message = "Cet email existe déjà.";
+        }
+    }
+}
 
 // User display
 // 1 - User recuperation
