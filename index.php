@@ -143,7 +143,7 @@ if(isset($_POST["submit"])){
         // IF yes => Start adding a user
             $message = addUser($tab["name_user"], $tab["first_name_user"], $tab["email_user"], $tab["password_user"]);
         }else {
-            $message = "Cet email existe déjà.";
+            $message = "<h5>Cet email existe déjà.</h5>";
         }
     }
 }
@@ -168,7 +168,7 @@ foreach($users as $user){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container-fluid text-center pb-3 pt-1 position-absolute top-50 start-50 translate-middle" style="background-color:lightpink">
+    <div class="container-fluid text-center pb-3 pt-1 position-absolute" style="background-color:lightpink">
     <h2 class="mb-4 mt-3 text-center">Inscription</h2>
             <form class="form-group" action="" method="post" >
                 <div class="row justify-content-center">
