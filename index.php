@@ -223,11 +223,7 @@ $displayConnected = "";
 if (isset($_SESSION['id_user'])) {
     $displayConnected = "d-none";
 }
-
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
