@@ -4,7 +4,7 @@ session_start();
 $emailCo = "";
 $passwordCo = "";
 
-if(isset($_SESSION['emailCo']) && isset($_SESSION['passwordCo'])){
+if (isset($_SESSION['emailCo']) && isset($_SESSION['passwordCo'])) {
     $emailCo = $_SESSION['emailCo'];
     $passwordCo = $_SESSION['passwordCo'];
 }
@@ -18,7 +18,8 @@ function sanitize($data)
     return htmlentities(strip_tags(stripslashes(trim($data))));
 }
 
-function modifyFormInspection(){
+function modifyFormInspection()
+{
     // Check for empty fields
     if (!isset($_POST["valueEmail"]) || empty($_POST["valueEmail"])) {
         return ["valueName" => "", "valueFirstName" => "", "valueEmail" => "", "erreur" => "Veuillez enregistrer un email."];
@@ -41,28 +42,29 @@ function modifyFormInspection(){
 // Function to modify datas in DB
 // Param = string $name_user, string $first_name_user, string $email_user
 // Return = String 
-function modifyInfo($modify_name, $modify_first_name, $modify_email){
+function modifyInfo($modify_name, $modify_first_name, $modify_email)
+{
     $bdd = new PDO('mysql:host = localhost; dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
     $sessionIdUser = $_SESSION['id_user'];
-    
-    try{
-        $req = $bdd -> prepare("UPDATE users SET name_user = ?, first_name_user = ?, email_user = ? WHERE id_user = $sessionIdUser");
-        $req -> bindParam(1, $modify_name, PDO::PARAM_STR);
-        $req -> bindParam(2, $modify_first_name, PDO::PARAM_STR);
-        $req -> bindParam(3, $modify_email, PDO::PARAM_STR);
 
-        $req -> execute();
+    try {
+        $req = $bdd->prepare("UPDATE users SET name_user = ?, first_name_user = ?, email_user = ? WHERE id_user = $sessionIdUser");
+        $req->bindParam(1, $modify_name, PDO::PARAM_STR);
+        $req->bindParam(2, $modify_first_name, PDO::PARAM_STR);
+        $req->bindParam(3, $modify_email, PDO::PARAM_STR);
+
+        $req->execute();
 
         return "Informations modifiées avec succès.";
-    } catch(EXCEPTION $error) {
-        return $error -> getMessage();
+    } catch (EXCEPTION $error) {
+        return $error->getMessage();
     }
 }
 
-if(isset($_POST["save"])){
+if (isset($_POST["save"])) {
     $tab = modifyFormInspection();
-    if($tab["erreur"] = ""){
+    if ($tab["erreur"] = "") {
         $messageModify = $tab["erreur"];
     } else {
         $messageModify = modifyInfo($tab["valueName"], $tab["valueFirstName"], $tab["valueEmail"]);
@@ -87,6 +89,34 @@ if(isset($_POST["save"])){
 </head>
 
 <body>
+
+    <style>
+        @font-face {
+            font-family: Raleway;
+            src: url('Raleway.ttf')
+        }
+
+        @font-face {
+            font-family: LemonMilk;
+            src: url('LemonMilk.otf')
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        a {
+            font-family: LemonMilk;
+        }
+
+        p,
+        h5,
+        h6 {
+            font-family: Raleway;
+        }
+    </style>
+
+
     <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" style="font-size:120%">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php" style="font-size : 120%">To-Do List</a>
@@ -109,50 +139,59 @@ if(isset($_POST["save"])){
         <h2 class="mb-4 mt-3">Mon Compte</h2>
         <form class="form-group" action="" method="post">
 
-        <!-- Row 1/2 - Nom-->
+            <!-- Row 1/2 - Nom-->
             <div class="row justify-content-center">
-                <div class = "col-2">
-                <label for="valueName"> <h5>Nom</h5></label>
+                <div class="col-2">
+                    <label for="valueName">
+                        <h5>Nom</h5>
+                    </label>
                 </div>
             </div>
 
             <div class="row justify-content-center">
-                <div class = "col-2 mb-4" style="width:20%, font-size:100%">
-                <input type="text" name="valueName" value="<?php echo $_SESSION['name_user']?>" class="form-control">
+                <div class="col-2 mb-4" style="width:20%, font-size:100%">
+                    <input type="text" name="valueName" value="<?php echo $_SESSION['name_user'] ?>"
+                        class="form-control">
                 </div>
             </div>
 
-        <!-- Row 3/4 - Prénom-->
-        <div class="row justify-content-center">
-            <div class = "col-2">
-            <label for="valueFirstName"> <h5>Prénom</h5></label>
+            <!-- Row 3/4 - Prénom-->
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <label for="valueFirstName">
+                        <h5>Prénom</h5>
+                    </label>
+                </div>
             </div>
-        </div>
 
-        <div class="row justify-content-center">
-            <div class = "col-2 mb-4" style="width:20%, font-size:100%">
-            <input type="text" name="valueFirstName" value="<?php echo $_SESSION['first_name_user']?> " class="form-control">
+            <div class="row justify-content-center">
+                <div class="col-2 mb-4" style="width:20%, font-size:100%">
+                    <input type="text" name="valueFirstName" value="<?php echo $_SESSION['first_name_user'] ?> "
+                        class="form-control">
+                </div>
             </div>
-        </div>
 
-        <!-- Row 5/6 - Email -->
-        <div class="row justify-content-center">
-            <div class = "col-2">
-            <label for="valueEmail"> <h5>Email</h5></label>
+            <!-- Row 5/6 - Email -->
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <label for="valueEmail">
+                        <h5>Email</h5>
+                    </label>
+                </div>
             </div>
-        </div>
 
-        <div class="row justify-content-center">
-            <div class = "col-2 mb-5" style="width:20%, font-size:100%">
-            <input type="text" name="valueEmail" value="<?php echo $_SESSION['email_user']?>" class="form-control" >
+            <div class="row justify-content-center">
+                <div class="col-2 mb-5" style="width:20%, font-size:100%">
+                    <input type="text" name="valueEmail" value="<?php echo $_SESSION['email_user'] ?>"
+                        class="form-control">
+                </div>
             </div>
-        </div>
 
             <!-- Button "Modify"-->
             <!-- <input type="submit" class="btn btn-outline-dark" name="submit" value="Modifier"> -->
 
-        <!-- Button Enregistrer -->
-        <input type="submit" class="btn btn-outline-dark mb-3" name="save" value="Enregistrer">
+            <!-- Button Enregistrer -->
+            <input type="submit" class="btn btn-outline-dark mb-3" name="save" value="Enregistrer">
 
         </form>
         <p class="mt-4" style="font-size:110%"><strong><?php echo $messageModify ?></strong></p>

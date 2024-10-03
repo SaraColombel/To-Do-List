@@ -182,7 +182,7 @@ function connectionFormInspection()
     if (!isset($_POST["passwordCo"]) || empty($_POST["passwordCo"])) {
         return ["emailCo" => "", "passwordCo" => "", "erreur" => "Veuillez entrer un mot de passe."];
     }
-    
+
     // 2 - Datas cleaning
     $emailCo = sanitize($_POST["emailCo"]);
     $passwordCo = sanitize($_POST["passwordCo"]);
@@ -200,9 +200,9 @@ function connectionFormInspection()
 $emailUser = connectionFormInspection();
 $user = readUsersByEmail($emailUser['emailCo']);
 
-if(empty($user)){
+if (empty($user)) {
     $messageCo = "Veuillez remplir tous les champs de connexion.";
-} else if(password_verify($emailUser['passwordCo'], $user[0]['password_user'])){
+} else if (password_verify($emailUser['passwordCo'], $user[0]['password_user'])) {
     $_SESSION['id_user'] = $user[0]['id_user'];
     $_SESSION['name_user'] = $user[0]['name_user'];
     $_SESSION['first_name_user'] = $user[0]['first_name_user'];
@@ -214,9 +214,14 @@ if(empty($user)){
 
 // "My account" and "Disconnection"  disappear when nobody is connected
 $display = "d-none";
-if(isset($_SESSION['id_user'])){
+if (isset($_SESSION['id_user'])) {
     $display = "";
-    print_r($display);
+}
+
+// Connection and inscription forms disapear when someone is connected
+$displayConnected = "";
+if (isset($_SESSION['id_user'])) {
+    $displayConnected = "d-none";
 }
 
 
@@ -235,6 +240,31 @@ if(isset($_SESSION['id_user'])){
 </head>
 
 <body>
+    <style>
+        @font-face {
+            font-family: Raleway;
+            src: url('/fonts/Raleway.ttf')
+        }
+
+        @font-face {
+            font-family: LemonMilk;
+            src: url('/fonts/LemonMilk.otf')
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        a {
+            font-family: LemonMilk;
+        }
+
+        p,
+        h5,
+        h6 {
+            font-family: Raleway;
+        }
+    </style>
 
     <!-- Navbar -->
     <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" style="font-size:120%">
@@ -247,16 +277,16 @@ if(isset($_SESSION['id_user'])){
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
-                    <a class="nav-link <?php echo $display?>" href="moncompte.php">Mon compte</a>
-                    <a class="nav-link <?php echo $display?>" href="deco.php">Déconnexion</a>
+                    <a class="nav-link <?php echo $display ?>" href="moncompte.php">Mon compte</a>
+                    <a class="nav-link <?php echo $display ?>" href="deco.php">Déconnexion</a>
                 </div>
             </div>
         </div>
     </nav>
 
 
-<!--Connection fields-->
-    <div class="container-fluid text-center">
+    <!--Connection fields-->
+    <div class="container-fluid text-center <?php echo $displayConnected ?>">
         <h2 class="mb-4 mt-3 text-center">Connexion</h2>
         <form class="form-group" action="" method="post">
             <div class="row justify-content-center">
@@ -271,16 +301,16 @@ if(isset($_SESSION['id_user'])){
 
             <div class="row justify-content-center">
                 <div class="col-3 mt-3">
-                    <input type="submit" class="btn btn-dark" name="connexion" value="Connexion">
+                    <input type="submit" class="btn btn-outline-dark" name="connexion" value="Connexion">
                 </div>
             </div>
         </form>
-        <p class="mt-4" style="font-size:110%"><strong><?php echo $messageCo?></strong></p>
+        <p class="mt-4" style="font-size:110%"><strong><?php echo $messageCo ?></strong></p>
     </div>
 
 
     <!-- Inscription field -->
-    <div class="container-fluid text-center pb-3 pt-1 position-absolute" style="background-color:lightpink">
+    <div class="container-fluid text-center pb-3 pt-1 position-absolute <?php echo $displayConnected ?>" style="background-color:lightpink">
         <h2 class="mb-4 mt-3 text-center">Inscription</h2>
         <form class="form-group" action="" method="post">
             <div class="row justify-content-center">
@@ -294,17 +324,17 @@ if(isset($_SESSION['id_user'])){
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-2">
+                <div class="col-2 mb-3">
                     <input type="text" name="email_user" placeholder="Email" class="form-control">
                 </div>
 
-                <div class="col-2">
+                <div class="col-2 mb-3">
                     <input type="password" name="password_user" placeholder="Mot de passe" class="form-control">
                 </div>
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-4 mt-4">
+                <div class="col-4 mt-3">
                     <input type="submit" class="btn btn-light" name="submit" value="Ajouter +">
                 </div>
             </div>
