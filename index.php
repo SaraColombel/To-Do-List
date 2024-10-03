@@ -179,7 +179,6 @@ function connectionFormInspection()
     if (!isset($_POST["emailCo"]) || empty($_POST["emailCo"])) {
         return ["emailCo" => "", "passwordCo" => "", "erreur" => "Veuillez entrer un email."];
     }
-    
     if (!isset($_POST["passwordCo"]) || empty($_POST["passwordCo"])) {
         return ["emailCo" => "", "passwordCo" => "", "erreur" => "Veuillez entrer un mot de passe."];
     }
@@ -197,16 +196,9 @@ function connectionFormInspection()
     return ["emailCo" => $emailCo, "passwordCo" => $passwordCo, "erreur" => ""];
 }
 
-// if(isset($_POST['submit'])){
-//     $_SESSION['emailCo'] = $_POST['email_user'];
-//     $_SESSION['passwordCo'] = $_POST['password_user'];
-//     $_SESSION['connected'] = true;
-//     $display = "";
-// }
 
 $emailUser = connectionFormInspection();
 $user = readUsersByEmail($emailUser['emailCo']);
-// $passwordCo = password_hash($passwordCo, PASSWORD_BCRYPT);
 
 if(empty($user)){
     $messageCo = "Veuillez remplir tous les champs de connexion.";
@@ -220,11 +212,14 @@ if(empty($user)){
     $messageCo = "Email ou mot de passe invalide.";
 }
 
+// "My account" and "Disconnection"  disappear when nobody is connected
 $display = "d-none";
 if(isset($_SESSION['id_user'])){
     $display = "";
     print_r($display);
 }
+
+
 ?>
 
 
@@ -240,6 +235,8 @@ if(isset($_SESSION['id_user'])){
 </head>
 
 <body>
+
+    <!-- Navbar -->
     <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary" data-bs-theme="dark" style="font-size:120%">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php" style="font-size : 120%">To-Do List</a>
@@ -258,6 +255,7 @@ if(isset($_SESSION['id_user'])){
     </nav>
 
 
+<!--Connection fields-->
     <div class="container-fluid text-center">
         <h2 class="mb-4 mt-3 text-center">Connexion</h2>
         <form class="form-group" action="" method="post">
@@ -267,7 +265,7 @@ if(isset($_SESSION['id_user'])){
                 </div>
 
                 <div class="col-2 mb-3">
-                    <input type="text" name="passwordCo" placeholder="Mot de passe" class="form-control">
+                    <input type="password" name="passwordCo" placeholder="Mot de passe" class="form-control">
                 </div>
             </div>
 
@@ -281,6 +279,7 @@ if(isset($_SESSION['id_user'])){
     </div>
 
 
+    <!-- Inscription field -->
     <div class="container-fluid text-center pb-3 pt-1 position-absolute" style="background-color:lightpink">
         <h2 class="mb-4 mt-3 text-center">Inscription</h2>
         <form class="form-group" action="" method="post">
@@ -300,7 +299,7 @@ if(isset($_SESSION['id_user'])){
                 </div>
 
                 <div class="col-2">
-                    <input type="text" name="password_user" placeholder="Mot de passe" class="form-control">
+                    <input type="password" name="password_user" placeholder="Mot de passe" class="form-control">
                 </div>
             </div>
 
@@ -315,6 +314,9 @@ if(isset($_SESSION['id_user'])){
             <?php echo $listUser ?>
         </section>
     </div>
+
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
