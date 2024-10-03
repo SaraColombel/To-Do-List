@@ -136,9 +136,9 @@ function readUsers()
 // Return : String
 function cardUser($profil)
 {
-    return "<article style = 'border-top : 2px solid black' class='me-5'>
-        <h5 class='mt-4'><strong>Nom - Prénom :</strong> {$profil['name_user']} - {$profil['first_name_user']}</h5>
-        <h6 class='mb-4'>Email : {$profil['email_user']}</h6>
+    return "<article style = 'border-top : 2px solid black'>
+        <h5 class='mb-3 mt-4'>Nom - Prénom : <strong>{$profil['name_user']} - {$profil['first_name_user']}</strong></h5>
+        <h5 class='mb-4'>Email : {$profil['email_user']}</h5>
     </article>";
 }
 
@@ -304,15 +304,17 @@ if(isset($_SESSION['id_user'])){
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-3 mt-4">
+                <div class="col-4 mt-4">
                     <input type="submit" class="btn btn-light" name="submit" value="Ajouter +">
                 </div>
             </div>
         </form>
         <p class="mt-4" style="font-size:110%"><strong><?php echo $message ?></strong></p>
-        <section>
-            <?php echo $listUser ?>
-        </section>
+        <div class="d-flex justify-content-center">
+            <div class="col-4 text-center">
+                <?php echo $listUser ?>
+            </div>
+        </div>
     </div>
 
 

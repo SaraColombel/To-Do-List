@@ -117,7 +117,7 @@ if(isset($_POST["save"])){
             </div>
 
             <div class="row justify-content-center">
-                <div class = "col-2 mb-4" style="width:20%">
+                <div class = "col-2 mb-4" style="width:20%, font-size:100%">
                 <input type="text" name="valueName" value="<?php echo $_SESSION['name_user']?>" class="form-control">
                 </div>
             </div>
@@ -130,7 +130,7 @@ if(isset($_POST["save"])){
         </div>
 
         <div class="row justify-content-center">
-            <div class = "col-2 mb-4" style="width:20%">
+            <div class = "col-2 mb-4" style="width:20%, font-size:100%">
             <input type="text" name="valueFirstName" value="<?php echo $_SESSION['first_name_user']?> " class="form-control">
             </div>
         </div>
@@ -143,7 +143,7 @@ if(isset($_POST["save"])){
         </div>
 
         <div class="row justify-content-center">
-            <div class = "col-2 mb-5" style="width:20%">
+            <div class = "col-2 mb-5" style="width:20%, font-size:100%">
             <input type="text" name="valueEmail" value="<?php echo $_SESSION['email_user']?>" class="form-control" >
             </div>
         </div>
