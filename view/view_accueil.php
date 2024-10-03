@@ -1,10 +1,8 @@
 <!-- Body -->
 
-<div class="">
-    <div class="<?php echo $display?> d-flex justify-content-center">
+    <div class="<?php echo $display?> d-flex justify-content-center mt-5">
         <h1 class="">Bonjour <?php echo $_SESSION['first_name_user']?>. Nous vous attendions.</h1>
     </div>
-</div>
 
 <!--Connection fields-->
     <div class="container-fluid text-center <?php echo $displayConnected ?>">
