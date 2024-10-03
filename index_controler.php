@@ -125,7 +125,7 @@ if (empty($user)) {
     $messageCo = "Email ou mot de passe invalide.";
 }
 
-// "My account" and "Disconnection"  disappear when nobody is connected
+// Element disappear when nobody is connected
 $display = "d-none";
 if (isset($_SESSION['id_user'])) {
     $display = "";
