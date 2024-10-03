@@ -21,8 +21,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="index_controler.php">Accueil</a>
-                    <a class="nav-link <?php echo $display ?>" href="moncompte_controler.php">Mon compte</a>
+                    <a class="nav-link <?php echo $homeActive ?>" aria-current="page" href="index_controler.php">Accueil</a>
+                    <a class="nav-link <?php echo $display ?><?php echo $myAccountActive ?>" href="moncompte_controler.php">Mon compte</a>
                     <a class="nav-link <?php echo $display ?>" href="deco_controler.php">Déconnexion</a>
                 </div>
             </div>

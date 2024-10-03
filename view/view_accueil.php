@@ -1,4 +1,12 @@
-    <!--Connection fields-->
+<!-- Body -->
+
+<div class="">
+    <div class="<?php echo $display?> d-flex justify-content-center">
+        <h1 class="">Bonjour <?php echo $_SESSION['first_name_user']?>. Nous vous attendions.</h1>
+    </div>
+</div>
+
+<!--Connection fields-->
     <div class="container-fluid text-center <?php echo $displayConnected ?>">
         <h2 class="mb-4 mt-3 text-center">Connexion</h2>
         <form class="form-group" action="" method="post">

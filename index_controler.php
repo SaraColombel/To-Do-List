@@ -137,6 +137,8 @@ if (isset($_SESSION['id_user'])) {
     $displayConnected = "d-none";
 }
 
+$homeActive = "active";
+
 // Inclure ma view : view_accueil.php
 include './view/view_header.php';
 include './view/view_accueil.php';
