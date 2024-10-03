@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include './utilitaire/functions.php';
 include './model/model_users.php';
+include './utilitaire/functions.php';
 
 $emailCo = "";
 $passwordCo = "";
@@ -15,11 +15,6 @@ if (isset($_SESSION['emailCo']) && isset($_SESSION['passwordCo'])) {
 
 // Modify personnals informations in "my account"
 $messageModify = "";
-
-function sanitize($data)
-{
-    return htmlentities(strip_tags(stripslashes(trim($data))));
-}
 
 function modifyFormInspection()
 {
@@ -54,3 +49,7 @@ if (isset($_POST["save"])) {
         $_SESSION['email_user'] = $tab["valueEmail"];
     }
 }
+
+
+include './view/view_header.php';
+include './view/view_moncompte.php';

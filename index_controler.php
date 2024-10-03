@@ -138,5 +138,6 @@ if (isset($_SESSION['id_user'])) {
 }
 
 // Inclure ma view : view_accueil.php
+include './view/view_header.php';
 include './view/view_accueil.php';
 

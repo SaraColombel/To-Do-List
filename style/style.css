@@ -1,0 +1,77 @@
+@font-face {
+    font-family: Raleway;
+    src: url('/fonts/Raleway.ttf')
+}
+
+@font-face {
+    font-family: LemonMilk;
+    src: url('/fonts/LemonMilk.otf')
+}
+
+h1,
+h2,
+h3,
+h4,
+a {
+    font-family: LemonMilk;
+}
+
+p,
+h5,
+h6 {
+    font-family: Raleway;
+}
+
+@media (min-width : 1350px){
+    h5, p {
+        font-size: 1vw;
+    }
+    h2 {
+        font-size: 2vw;
+    }
+}
+
+@media (min-width : 1150px) and (max-width : 1350px){
+    h5, p{
+        font-size: 1.2vw;
+    }
+    h2 {
+        font-size: 2.2vw;
+    }
+}
+
+@media (min-width : 950px) and (max-width : 1150px){
+    h5, p{
+        font-size: 1.4vw;
+    }
+    h2 {
+        font-size: 2.4vw;
+    }
+}
+
+@media (min-width : 750px) and (max-width : 950px){
+    h5, p{
+        font-size: 1.7vw;
+    }
+    h2 {
+        font-size: 2.7vw;
+    }
+}
+
+@media (min-width : 550px) and (max-width : 750px){
+    h5, p{
+        font-size: 2.1vw;
+    }
+    h2 {
+        font-size: 3.7vw;
+    }
+}
+
+@media (min-width : 200px) and (max-width : 550px){
+    h5, p{
+        font-size: 3vw;
+    }
+    h2 {
+        font-size: 5vw;
+    }
+}
