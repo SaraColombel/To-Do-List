@@ -9,7 +9,6 @@ $message = "";
 $listUser = "";
 $messageCo = "";
 
-
 // formInspection() : Check form datas
 // Param : void
 // Return : array ["name" => string, "frist_name" => string, "email" => string, "password" => string, "erreur" => string]
@@ -23,7 +22,6 @@ function formInspection()
     if (!isset($_POST["password_user"]) || empty($_POST["password_user"])) {
         return ["name_user" => "", "first_name_user" => "", "email_user" => "", "password_user" => "", "erreur" => "Veuillez enregistrer un mot de passe."];
     }
-
 
     // 2 - Datas cleaning
     $name_user = sanitize($_POST["name_user"]);
@@ -61,10 +59,13 @@ if (isset($_POST["submit"])) {
     if ($tab["erreur"] != "") {
         $message = $tab["erreur"];
     } else {
+        $newUser = new ModelUsers($tab['email_user']);
+
+        $newUser -> setFirstNameUser($tab['first_name_user'])-> setNameUser($tab['name_user'])-> setPasswordUser($tab['password_user']);
         // Check if email available
-        if (empty(readUsersByEmail($tab['email_user']))) {
+        if (empty($newUser->readUsersByEmail())) {
             // IF yes => Start adding a user
-            $message = addUser($tab["name_user"], $tab["first_name_user"], $tab["email_user"], $tab["password_user"]);
+            $message = $newUsers->addUser();
         } else {
             $message = "<h5>Cet email existe déjà.</h5>";
         }
@@ -74,7 +75,8 @@ if (isset($_POST["submit"])) {
 
 // USER DISPLAY
 // 1 - User recuperation
-$users = readUsers();
+$ModelUser = new ModelUsers(null);
+$users = $ModelUser->readUsers();
 
 // 2 - User array traitment, display of all users in it
 foreach ($users as $user) {
@@ -110,19 +112,66 @@ function connectionFormInspection()
 }
 
 
-$emailUser = connectionFormInspection();
-$user = readUsersByEmail($emailUser['emailCo']);
+// $emailUser = connectionFormInspection();
+// $user = $ModelUsers->readUsersByEmail($emailUser['emailCo']);
 
-if (empty($user)) {
-    $messageCo = "Veuillez remplir tous les champs de connexion.";
-} else if (password_verify($emailUser['passwordCo'], $user[0]['password_user'])) {
-    $_SESSION['id_user'] = $user[0]['id_user'];
-    $_SESSION['name_user'] = $user[0]['name_user'];
-    $_SESSION['first_name_user'] = $user[0]['first_name_user'];
-    $_SESSION['email_user'] = $user[0]['email_user'];
-    $messageCo = "Bienvenue, {$_SESSION['first_name_user']}.";
-} else {
-    $messageCo = "Email ou mot de passe invalide.";
+// if (empty($user)) {
+//     $messageCo = "Veuillez remplir tous les champs de connexion.";
+// } else if (password_verify($emailUser['passwordCo'], $user[0]['password_user'])) {
+//     $_SESSION['id_user'] = $user[0]['id_user'];
+//     $_SESSION['name_user'] = $user[0]['name_user'];
+//     $_SESSION['first_name_user'] = $user[0]['first_name_user'];
+//     $_SESSION['email_user'] = $user[0]['email_user'];
+//     $messageCo = "Bienvenue, {$_SESSION['first_name_user']}.";
+// } else {
+//     $messageCo = "Email ou mot de passe invalide.";
+// }
+
+//Test si le formulaire de connexion m'est envoyé
+if(isset($_POST['connexion'])){
+    //je teste les données de connexion envoyés
+    $tab = connectionFormInspection();
+
+    //je regarde si je suis dans le cas d'erreur
+    if($tab['erreur'] != ''){
+        //si c'est le cas : j'affiche l'erreur
+        $messageCo = $tab['erreur'];
+    }else{
+        //Si tout s'est bien passé :
+        //Création de mon objet $user à partir du ModelUser
+        $user = new ModelUsers($tab['emailCo']);
+
+        //Interroger la BDD pour récupérer les données de l'utilisateurs à partir du login entré
+        $data = $user->readUsersByEmail();
+
+        //Tester si je suis dans le cas d'erreur (problème de communication avec la BDD)
+        //Si c'est le cas, je reçois un string, si tout s'est passé je reçois un array
+        if(gettype($data) == 'string'){
+            $messageCo = $data;
+        }else{
+            //Tout s'est bien passé
+            //Je vérifie la réponse de la BDD : vide ou pas ?
+            //Si c'est vide : alors le login n'existe pas en BDD, et j'affiche un message d'erreur
+            if(empty($data)){
+                $messageCo = "Erreur dans l'email et/ou dans le mot de passe.";
+            }else{
+                //Si on trouve le login en BDD
+                //Je vérifie la correspondance des mots de passe
+                if(!password_verify($tab['passwordCo'],$data[0]['password_user'])){
+                    //Si les mots de passe ne correspondent pas, j'affiche un message d'erreur
+                    $messageCo = "Erreur dans l'email et/ou dans le mot de passe.";
+                }else{
+                    //Si les mots de passe correspondent, j'enregistre les données de l'utilisateur en SESSION, et j'affiche un message de confimation
+                    $_SESSION['id_user'] = $data[0]['id_user'];
+                    $_SESSION['name_user'] = $data[0]['name_user'];
+                    $_SESSION['first_name_user'] = $data[0]['first_name_user'];
+                    $_SESSION['email_user'] = $data[0]['email_user'];
+                    
+                    $messageCo = "{$_SESSION['email_user']} est connecté avec succés !";
+                }
+            }
+        }
+    }
 }
 
 // Element disappear when nobody is connected

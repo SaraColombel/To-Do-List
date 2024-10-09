@@ -1,10 +1,65 @@
 <?php
 
+class ModelUsers{
+    private ?int $id_user;
+    private ?string $name_user;
+    private ?string $first_name_user;
+    private ?string $email_user;
+    private ?string $password_user;
+
+    public function __construct(?string $email_user){
+    $this->email_user=$email_user;
+    }
+
+//START GETTERS
+public function getIdUser(): ?int{
+    return $this->id_user;
+}
+public function getNameUser(): ?string{
+    return $this->name_user;
+}
+public function getFirstNameUser(): ?string{
+    return $this->first_name_user;
+}
+public function getEmailUser(): ?string{
+    return $this->email_user;
+}
+public function getPasswordUser(): ?string{
+    return $this->password_user;
+}
+//END GETTERS
+
+
+//START SETTERS
+public function setIdUser(?int $id_user): ModelUsers{
+    $this->id_user = $id_user;
+    return $this;
+}
+public function setNameUser(?string $name_user): ModelUsers{
+    $this->name_user = $name_user;
+    return $this;
+}
+public function setFirstNameUser(?string $first_name_user): ModelUsers{
+    $this->first_name_user = $first_name_user;
+    return $this;
+}
+public function setEmailUser(?string $email_user): ModelUsers{
+    $this->email_user = $email_user;
+    return $this;
+}
+public function setPasswordUser(?string $password_user): ModelUsers{
+    $this->password_user = $password_user;
+    return $this;
+}
+//END SETTERS
+
+
 // Function to get back a user from DB
 // Param : string
 // Return : array | string
-function readUsersByEmail($email_user)
+public function readUsersByEmail(): array|string
 {
+    $email_user = $this->getEmailUser();
     // 1 - Instantiates the PDO connection object
     $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
@@ -33,9 +88,12 @@ function readUsersByEmail($email_user)
 // Function to save form datas in DB
 // Param : string $name_user, string $first_name_user, string $email_user, string $password_user
 // Return : String
-function addUser($name_user, $first_name_user, $email_user, $password_user)
+public function addUser(): string
 {
-
+    $name_user = $this->getNameUser();
+    $first_name_user = $this->getFirstNameUser();
+    $email_user = $this->getEmailUser();
+    $password_user = $this->getPasswordUser();
     // 1 - Instantiates the PDO connection object
     $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
@@ -91,7 +149,7 @@ function readUsers()
 // Function to modify datas in DB
 // Param = string $name_user, string $first_name_user, string $email_user
 // Return = String 
-function modifyInfo($modify_name, $modify_first_name, $modify_email)
+public function modifyInfo($modify_name, $modify_first_name, $modify_email): string
 {
     $bdd = new PDO('mysql:host = localhost; dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
@@ -109,4 +167,5 @@ function modifyInfo($modify_name, $modify_first_name, $modify_email)
     } catch (EXCEPTION $error) {
         return $error->getMessage();
     }
+}
 }

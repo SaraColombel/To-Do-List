@@ -36,6 +36,7 @@ function listCategory($category)
     </li>";
 }
 
+$ModelCategories = new ModelCategories(null);
 
 // Form reception verification
 if (isset($_POST["submit"])) {
@@ -43,13 +44,14 @@ if (isset($_POST["submit"])) {
     if ($tab["erreur"] != "") {
         $message = $tab["erreur"];
     } else {
-        $message = addCategory($tab["name_category"]);
+        $ModelCategories -> setNameCategory($tab['name_category']);
+        $message = $ModelCategories -> addCategory();
     }
 }
 
 // CATEGORY DISPLAY
 // 1 - Category recuperation
-$categories = readCategories();
+$categories = $ModelCategories->readCategories();
 
 // 2 - User array traitment, display of all users in it
 foreach ($categories as $category) {
