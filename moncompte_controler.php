@@ -2,6 +2,7 @@
 session_start();
 
 include './model/model_users.php';
+include './manager/managerUser.php';
 include './utilitaire/functions.php';
 
 $emailCo = "";
@@ -43,7 +44,9 @@ if (isset($_POST["save"])) {
     if ($tab["erreur"] = "") {
         $messageModify = $tab["erreur"];
     } else {
-        $messageModify = modifyInfo($tab["valueName"], $tab["valueFirstName"], $tab["valueEmail"]);
+        $modifyInfos = new ManagerUser($tab['valueEmail']);
+        $modifyInfos -> setFirstNameUser($tab['valueFirstName'])-> setNameUser($tab['valueName'])-> setEmailUser($tab['valueEmail']);
+        $messageModify =$modifyInfos->modifyInfo();
         $_SESSION['name_user'] = $tab["valueName"];
         $_SESSION['first_name_user'] = $tab["valueFirstName"];
         $_SESSION['email_user'] = $tab["valueEmail"];

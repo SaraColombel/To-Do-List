@@ -4,6 +4,7 @@ session_start();
 // J'inclus mes fichiers de ressources (model, fonctions utilitaires)
 include './model/model_users.php';
 include './utilitaire/functions.php';
+include './manager/managerUser.php';
 
 $message = "";
 $listUser = "";
@@ -59,7 +60,7 @@ if (isset($_POST["submit"])) {
     if ($tab["erreur"] != "") {
         $message = $tab["erreur"];
     } else {
-        $newUser = new ModelUsers($tab['email_user']);
+        $newUser = new ManagerUser($tab['email_user']);
 
         $newUser -> setFirstNameUser($tab['first_name_user'])-> setNameUser($tab['name_user'])-> setPasswordUser($tab['password_user']);
         // Check if email available
@@ -75,7 +76,7 @@ if (isset($_POST["submit"])) {
 
 // USER DISPLAY
 // 1 - User recuperation
-$ModelUser = new ModelUsers(null);
+$ModelUser = new ManagerUser(null);
 $users = $ModelUser->readUsers();
 
 // 2 - User array traitment, display of all users in it
@@ -139,7 +140,7 @@ if(isset($_POST['connexion'])){
     }else{
         //Si tout s'est bien passé :
         //Création de mon objet $user à partir du ModelUser
-        $user = new ModelUsers($tab['emailCo']);
+        $user = new ManagerUser($tab['emailCo']);
 
         //Interroger la BDD pour récupérer les données de l'utilisateurs à partir du login entré
         $data = $user->readUsersByEmail();
