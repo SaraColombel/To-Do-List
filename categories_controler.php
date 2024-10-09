@@ -2,6 +2,7 @@
 session_start();
 
 include './model/model_categories.php';
+include './manager/managerCategories.php';
 include './utilitaire/functions.php';
 
 $name_category = "";
@@ -44,17 +45,20 @@ if (isset($_POST["submit"])) {
     if ($tab["erreur"] != "") {
         $message = $tab["erreur"];
     } else {
-        $ModelCategories -> setNameCategory($tab['name_category']);
-        $message = $ModelCategories -> addCategory();
+        $ManagerCategories -> setNameCategory($tab['name_category']);
+        $message = $ManagerCategories -> addCategory();
     }
 }
 
+
+
 // CATEGORY DISPLAY
+$category = new ManagerCategories(null);
 // 1 - Category recuperation
-$categories = $ModelCategories->readCategories();
+$data = $category->readCategories();
 
 // 2 - User array traitment, display of all users in it
-foreach ($categories as $category) {
+foreach ($data as $category) {
     $listCategories .= listCategory($category);
 }
 

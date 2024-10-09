@@ -5,7 +5,10 @@ session_start();
 //J'inclus mes ressources (fonction utilitaire, model)
 include './utilitaire/functions.php';
 include './model/model_categories.php';
+include './manager/managerCategories.php';
 include './model/model_tasks.php';
+include './manager/managerTasks.php';
+
 
 //Déclaration de mes variables d'affichages
 $optCategories = "";
@@ -58,8 +61,8 @@ function testFormAddTask(){
 
 //Affichage des options pour le <select> categories
 //je récupère la liste de mes categories
-$ModelCategories = new ModelCategories(null);
-$data = $ModelCategories->readCategories();
+$category = new ManagerCategories(null);
+$data = $category->readCategories();
 
 //je vérifie si je ne suis pas dans le cas d'erreur
 if(gettype($data) != 'string'){
@@ -84,19 +87,22 @@ if(isset($_POST['ajouterTask'])){
     }else{
         $ModelTasks -> setNameTask($tab['name_task'])-> setContentTask($tab['content_task'])-> setDateTask($tab['date_task'])->setIdUser($tab['id_user'])->setIdCategory($tab['id_category']);
         //je lance l'enregistrement de la task
-        $message = $ModelTasks -> addTask();
+        $message = $ManagerTasks -> addTask();
     }
 }
 
 //AFFICHAGE DE LA LISTE DES TASKS
 //je récupère mes données
-$ModelTasks -> setIdUser($_SESSION['id_user']);
-$data = $ModelTasks ->readTasksByUser();
+$ManagerTasks = new ManagerTasks(null, null, null);
+$ManagerTasks -> setIdUser($_SESSION['id_user']);
+$data = $ManagerTasks ->readTasksByUser();
 
 //J'affiche la liste
 foreach($data as $task){
     $listeTasks = $listeTasks.cardTask($task);
 }
+
+$taskActive = "active";
 
 //j'inclus les view
 include './view/view_header.php';

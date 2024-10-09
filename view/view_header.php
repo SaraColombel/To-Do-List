@@ -23,7 +23,7 @@
                 <div class="navbar-nav">
                     <a class="nav-link <?php echo $homeActive ?>" aria-current="page" href="index_controler.php">Accueil</a>
                     <a class="nav-link <?php echo $display?> <?php echo $listActive?>" aria-current="page" href="categories_controler.php">Catégories</a>
-                    <a class="nav-link <?php echo $display ?> <?php echo $listActive?>" href="tasks_controler.php">Tâches</a>
+                    <a class="nav-link <?php echo $display ?> <?php echo $taskActive?>" href="tasks_controler.php">Tâches</a>
                     <a class="nav-link <?php echo $display ?> <?php echo $myAccountActive?>" href="moncompte_controler.php">Mon compte</a>
                     <a class="nav-link <?php echo $display ?>" href="deco_controler.php">Déconnexion</a>
                 </div>
