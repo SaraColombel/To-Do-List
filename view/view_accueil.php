@@ -1,7 +1,7 @@
 <!-- Body -->
 
     <div class="<?php echo $display?> d-flex justify-content-center mt-5">
-        <h1 class="">Bonjour <?php echo $_SESSION['first_name_user']?>. Nous vous attendions.</h1>
+        <h1 class="">Bonjour. Nous vous attendions.</h1>
     </div>
 
 <!--Connection fields-->
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </form>
-        <p class="mt-4" style="font-size:110%"><?php echo $messageCo ?></p>
+        <p class="mt-4" style="font-size:110%"><?php echo $controlerAccueil->getMessageCo() ?></p>
     </div>
 
 
@@ -58,10 +58,10 @@
                 </div>
             </div>
         </form>
-        <p class="mt-4" style="font-size:110%"><strong><?php echo $message ?></strong></p>
+        <p class="mt-4" style="font-size:110%"><strong><?php echo $controlerAccueil->getMessage() ?></strong></p>
         <div class="d-flex justify-content-center">
             <div class="col-4 text-center">
-                <?php echo $listUser ?>
+                <?php echo $controlerAccueil->getListUser()?>
             </div>
         </div>
     </div>
