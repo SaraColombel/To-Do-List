@@ -1,7 +1,7 @@
 <!-- Body -->
 
     <div class="<?php echo $display?> d-flex justify-content-center mt-5">
-        <h1 class="">Bonjour. Nous vous attendions.</h1>
+        <h1 class="">Bonjour <?php echo $_SESSION['first_name_user']?>. Nous vous attendions.</h1>
     </div>
 
 <!--Connection fields-->

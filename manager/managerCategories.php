@@ -8,7 +8,7 @@ class ManagerCategories extends ModelCategories
     {
         $name_category = $this->getNameCategory();
         // 1 - Instantiates the PDO connection object
-        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO("mysql:host={$_ENV['DBhost']};dbname={$_ENV['DBname']}', '{$_ENV['login']}', '{$_ENV['password']}', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION");
 
         // 2 - Try ... catch
         try {

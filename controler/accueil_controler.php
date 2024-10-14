@@ -1,10 +1,4 @@
 <?php
-session_start();
-
-// J'inclus mes fichiers de ressources (model, fonctions utilitaires)
-include './model/model_users.php';
-include './utilitaire/functions.php';
-include './manager/managerUser.php';
 
 class ControlerAccueil{
     private ?string $message;
@@ -210,8 +204,4 @@ if (isset($_SESSION['id_user'])) {
 }
 
 $homeActive = "active";
-
-// Inclure ma view : view_accueil.php
-include './view/view_header.php';
-include './view/view_accueil.php';
 

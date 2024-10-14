@@ -7,11 +7,10 @@ class ModelTasks
     private ?string $content_task;
     private ?string $date_task;
 
-    public function __construct(?string $name_task, ?string $content_task, ?string $date_task)
+    public function __construct(?string $name_task)
     {
-        $this->nom_task = $name_task;
-        $this->content_task = $content_task;
-        $this->date_task = $date_task;
+        $this->name_task = $name_task;
+
     }
 
     //START GETTERS

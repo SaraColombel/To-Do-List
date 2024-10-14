@@ -1,10 +1,4 @@
 <?php
-session_start();
-
-include './model/model_categories.php';
-include './manager/managerCategories.php';
-include './utilitaire/functions.php';
-
 $name_category = "";
 $id_category = "";
 $listCategories = "";
@@ -37,7 +31,7 @@ function listCategory($category)
     </li>";
 }
 
-$ModelCategories = new ModelCategories(null);
+$ManagerCategories = new ManagerCategories(null);
 
 // Form reception verification
 if (isset($_POST["submit"])) {
@@ -45,8 +39,8 @@ if (isset($_POST["submit"])) {
     if ($tab["erreur"] != "") {
         $message = $tab["erreur"];
     } else {
-        $ManagerCategories -> setNameCategory($tab['name_category']);
-        $message = $ManagerCategories -> addCategory();
+        $ManagerCategories->setNameCategory($tab['name_category']);
+        $message = $ManagerCategories->addCategory();
     }
 }
 
@@ -64,7 +58,4 @@ foreach ($data as $category) {
 
 
 $listActive = "active";
-
-include './view/view_header.php';
-include './view/view_categories.php';
 

@@ -15,7 +15,7 @@ class ManagerTasks extends ModelTasks
         $id_category = $this->getIdCategory();
 
         //1Er Etape : Instancier l'objet de connexion PDO
-        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO("mysql:host={$_ENV['DBhost']};dbname={$_ENV['DBname']}', '{$_ENV['login']}', '{$_ENV['password']}', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION");
 
         //Try...Catch
         try {
@@ -33,7 +33,7 @@ class ManagerTasks extends ModelTasks
             $req->execute();
 
             //5eme Etape : Retourne un message de confirmation
-            return "$name_task , a été enregistré avec succès !";
+            return "$name_task, a été enregistré avec succès !";
         } catch (EXCEPTION $error) {
             return $error->getMessage();
         }
