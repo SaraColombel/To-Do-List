@@ -12,7 +12,7 @@ $messageCo = "";
 
 // formInspection() : Check form datas
 // Param : void
-// Return : array ["name" => string, "frist_name" => string, "email" => string, "password" => string, "erreur" => string]
+// Return : array ["name" => string, "first_name" => string, "email" => string, "password" => string, "erreur" => string]
 function formInspection()
 {
     // 1 - Look for empty fields
@@ -32,7 +32,7 @@ function formInspection()
 
     // 3 - Verify email format
     if (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
-        return ["name_user" => '', "first_name_user" => '', "login_user" => '', "password_user" => '', "erreur" => 'Email pas au bon format !'];
+        return ["name_user" => '', "first_name_user" => '', "email_user" => '', "password_user" => '', "erreur" => 'Email pas au bon format !'];
     }
 
     // 4 - Password hashing
@@ -41,6 +41,8 @@ function formInspection()
     // 5 - Return a tab to have cleaner view of datas
     return ["name_user" => $name_user, "first_name_user" => $first_name_user, "email_user" => $email_user, "password_user" => $password_user, "erreur" => ""];
 }
+
+print_r(formInspection());
 
 
 // Function to show users infos
@@ -103,10 +105,10 @@ function connectionFormInspection()
     $emailCo = sanitize($_POST["emailCo"]);
     $passwordCo = sanitize($_POST["passwordCo"]);
 
-    // 3 - Verify email format
-    if (!filter_var($emailCo, FILTER_VALIDATE_EMAIL)) {
-        return ["emailCo" => '', "passwordCo" => '', "erreur" => 'Email pas au bon format !'];
-    }
+    // // 3 - Verify email format
+    // if (!filter_var($emailCo, FILTER_VALIDATE_EMAIL)) {
+    //     return ["emailCo" => '', "passwordCo" => '', "erreur" => 'Email pas au bon format !'];
+    // }
 
     // 4 - Return a tab to have cleaner view of datas
     return ["emailCo" => $emailCo, "passwordCo" => $passwordCo, "erreur" => ""];
@@ -158,7 +160,7 @@ if(isset($_POST['connexion'])){
             }else{
                 //Si on trouve le login en BDD
                 //Je vérifie la correspondance des mots de passe
-                if(!password_verify($tab['passwordCo'],$data[0]['password_user'])){
+                if(!password_verify($tab['passwordCo'],$data[0]['mdp_user'])){
                     //Si les mots de passe ne correspondent pas, j'affiche un message d'erreur
                     $messageCo = "Erreur dans l'email et/ou dans le mot de passe.";
                 }else{

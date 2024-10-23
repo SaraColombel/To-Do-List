@@ -10,12 +10,12 @@ class ManagerUser extends ModelUsers
     {
         $email_user = $this->getEmailUser();
         // 1 - Instantiates the PDO connection object
-        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=tasks', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         // try ... catch
         try {
             // 1. Prepare request SELECT
-            $req = $bdd->prepare('SELECT id_user, name_user, first_name_user, email_user, password_user FROM users WHERE email_user = ?');
+            $req = $bdd->prepare('SELECT id_user, name_user, first_name_user, email_user, mdp_user FROM users WHERE email_user = ?');
 
             // 2. Add email in the request by associate "?" with "$email_user" 
             $req->bindParam(1, $email_user, PDO::PARAM_STR);
@@ -44,13 +44,13 @@ class ManagerUser extends ModelUsers
         $email_user = $this->getEmailUser();
         $password_user = $this->getPasswordUser();
         // 1 - Instantiates the PDO connection object
-        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=tasks', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         // 2 - Try ... catch
         try {
 
             // 1. Prepare request
-            $req = $bdd->prepare('INSERT INTO users (name_user, first_name_user, email_user, password_user)VALUES (?, ?, ?, ?)');
+            $req = $bdd->prepare('INSERT INTO users (name_user, first_name_user, email_user, mdp_user)VALUES (?, ?, ?, ?)');
 
             // 2. Link the "?" to their respective data
             $req->bindParam(1, $name_user, PDO::PARAM_STR);
@@ -73,12 +73,12 @@ class ManagerUser extends ModelUsers
     function readUsers()
     {
         // 1 - Instantiates the PDO connection object
-        $bdd = new PDO('mysql:host=localhost;dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host=localhost;dbname=tasks', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         // try ... catch
         try {
             // 1. Prepare request SELECT
-            $req = $bdd->prepare('SELECT id_user, name_user, first_name_user, email_user, password_user FROM users');
+            $req = $bdd->prepare('SELECT id_user, name_user, first_name_user, email_user, mdp_user FROM users');
 
             // 2. Execute request
             $req->execute();
@@ -102,7 +102,7 @@ class ManagerUser extends ModelUsers
         $modify_name = $this->getNameUser();
         $modify_first_name = $this->getFirstNameUser();
         $modify_email = $this->getEmailUser();
-        $bdd = new PDO('mysql:host = localhost; dbname=task', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO('mysql:host = localhost; dbname=tasks', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
         $sessionIdUser = $_SESSION['id_user'];
 
