@@ -1,9 +1,4 @@
 <?php
-session_start();
-
-include './model/model_categories.php';
-include './utilitaire/functions.php';
-
 $name_category = "";
 $id_category = "";
 $listCategories = "";
@@ -36,7 +31,7 @@ function listCategory($category)
     </li>";
 }
 
-$ModelCategories = new ModelCategories(null);
+$ManagerCategories = new ManagerCategories(null);
 
 // Form reception verification
 if (isset($_POST["submit"])) {
@@ -44,23 +39,23 @@ if (isset($_POST["submit"])) {
     if ($tab["erreur"] != "") {
         $message = $tab["erreur"];
     } else {
-        $ModelCategories -> setNameCategory($tab['name_category']);
-        $message = $ModelCategories -> addCategory();
+        $ManagerCategories->setNameCategory($tab['name_category']);
+        $message = $ManagerCategories->addCategory();
     }
 }
 
+
+
 // CATEGORY DISPLAY
+$category = new ManagerCategories(null);
 // 1 - Category recuperation
-$categories = $ModelCategories->readCategories();
+$data = $category->readCategories();
 
 // 2 - User array traitment, display of all users in it
-foreach ($categories as $category) {
+foreach ($data as $category) {
     $listCategories .= listCategory($category);
 }
 
 
 $listActive = "active";
-
-include './view/view_header.php';
-include './view/view_categories.php';
 

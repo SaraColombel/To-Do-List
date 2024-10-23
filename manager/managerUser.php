@@ -1,5 +1,4 @@
 <?php
-
 class ManagerUser extends ModelUsers
 {
 
@@ -10,7 +9,7 @@ class ManagerUser extends ModelUsers
     {
         $email_user = $this->getEmailUser();
         // 1 - Instantiates the PDO connection object
-        $bdd = new PDO('mysql:host=localhost;dbname=tasks', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $bdd = new PDO("mysql:host={$_ENV['DBhost']};dbname={$_ENV['DBname']}', '{$_ENV['login']}', '{$_ENV['password']}', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION");
 
         // try ... catch
         try {

@@ -1,10 +1,4 @@
 <?php
-session_start();
-
-include './model/model_users.php';
-include './manager/managerUser.php';
-include './utilitaire/functions.php';
-
 $emailCo = "";
 $passwordCo = "";
 
@@ -54,6 +48,3 @@ if (isset($_POST["save"])) {
 }
 
 $myAccountActive = "active";
-
-include './view/view_header.php';
-include './view/view_moncompte.php';
